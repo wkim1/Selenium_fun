@@ -3,16 +3,18 @@ from selenium.webdriver.common.keys import Keys
 import time
 import argparse
 import sys
+import getpass
 
 #Time to wait for the page to load
 WAITING_TIME = 5
 #Time to wait until trying to enroll again
-REFRESH_INTERVAL = 30
+REFRESH_INTERVAL = 60*10
 
-username = sys.argv[1]
-pw = sys.argv[2]
-authcode = sys.argv[3]
-className = sys.argv[4]
+username = raw_input("SUnet username: ")
+pw = getpass.getpass("SUnet password: ")
+className = raw_input("Course: ")
+authcode = raw_input("Authcode: ")
+
 
 driver = webdriver.Firefox()
 driver.maximize_window()
@@ -29,6 +31,7 @@ driver.find_element_by_name("Submit").click()
 authcodeElem = driver.find_element_by_name("otp")
 authcodeElem.send_keys(authcode)
 authcodeElem.send_keys(Keys.RETURN)
+
 
 queryElem = driver.find_element_by_name("query")
 queryElem.send_keys(className)
